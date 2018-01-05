@@ -22,6 +22,7 @@
 		C5EFD6FD2000020B00366BC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5EFD7002000020B00366BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5EFD7022000020B00366BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5EFD7082000062700366BC5 /* FunctionalSwift.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = FunctionalSwift.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +39,7 @@
 		C5EFD6EA2000020B00366BC5 = {
 			isa = PBXGroup;
 			children = (
+				C5EFD7082000062700366BC5 /* FunctionalSwift.playground */,
 				C5EFD6F52000020B00366BC5 /* Notes-App */,
 				C5EFD6F42000020B00366BC5 /* Products */,
 			);
