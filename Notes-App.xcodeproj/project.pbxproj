@@ -17,7 +17,7 @@
 
 /* Begin PBXFileReference section */
 		C5CCD51B20004DD100700BE6 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		C5CCD51D2001706500700BE6 /* StepByStepInstructions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = StepByStepInstructions.md; sourceTree = "<group>"; };
+		C5CCD51D2001706500700BE6 /* StepByStepInstructions.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = StepByStepInstructions.md; sourceTree = "<group>"; };
 		C5EFD6F32000020B00366BC5 /* Notes-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Notes-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5EFD6F62000020B00366BC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5EFD6F82000020B00366BC5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
