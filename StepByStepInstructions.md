@@ -55,6 +55,9 @@
 ## Adding Notes To The Model
 
 * **Discuss Outlets, and Actions if needed**
+* In `Main.storyboard` go to the **Object Library** and find a **Bar Button Item**
+* Drag a Button Item onto the right side of the navigation bar of the Table View Controller scene
+* In the **Attribute Inspector** make the "System Item" equal to "Add"
 * In `MasterViewController` find the `viewDidLoad()` method and uncomment the `navigationItem` line of code
 * Change the code to use the leftBarButtonItem instead: `self.navigationItem.leftBarButtonItem = self.editButtonItem`
 * Create an `IBAction` in `MasterViewController` which will be used to add new Notes into your model. This should be an **IBAction** from your + `Bar Button Item` in `Main.storyboard` to your `MasterViewController`
@@ -88,13 +91,18 @@
 ## Creating the Segue
 
 * **Discuss Segues**
-* Create a segue from MasterViewController to ViewController
-* Control Drag from Master to Detail
-* Click on the Segue then on **Attributes Inspector** and give it the Identifier name: `MasterToDetail`
-* In `Main.storyboard` create a String constant to match the Identifier
-* Go to the **Object Library** and find a **Bar Button Item**
-* Drag a Button Item into the right side of the navigation bar of the Table View Controller
-* In the **Attribute Inspector** make the "System Item" equal to "Add"
+* Start by renaming the `ViewController.swift` file to `DetailViewController`
+  * Click on the original `ViewController.swift` file, highlight `ViewController` in the source code, Right click -> Refactor -> Rename
+* In `Main.storyboard` click on the View Controller scene, then in **Identity Inspector** set `DetailViewController` as the class
+* Create a segue from the `MasterViewController` tableView cell to `DetailViewController`
+  * Control Drag from the `NotesCell` to the `DetailViewController` scene
+  * Select `Show` in the popup to create the segue
+  * Click on the new Segue then on **Attributes Inspector**, and give it the Identifier name: `MasterToDetail`
+* In `MasterViewController.swift` create a String constant to match the Identifier
+  ```swift
+  let segueIdentifier = "MasterToDetail"
+  ```
+* Uncomment the `func prepare(for segue)` code
 
 ## Bonus Functionality
 
