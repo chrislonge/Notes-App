@@ -62,6 +62,7 @@
 * Change the code to use the leftBarButtonItem instead: `self.navigationItem.leftBarButtonItem = self.editButtonItem`
 * Create an `IBAction` in `MasterViewController` which will be used to add new Notes into your model. This should be an **IBAction** from your + `Bar Button Item` in `Main.storyboard` to your `MasterViewController`
 * Make sure you click on **Show the Assistant Editor** so you can see your `MasterViewController.swift` and `Main.storybaord` files next to each other
+  * **PRO TIP:** You can hold `Option + Shift` then click on a file to give you presentation options
 * Control drag from your + `Bar Button Item` to the `MasterViewController` to create an `IBAction`
 * For **Connection** select: **Action**
 * For **Name** give it: `addNote` and click on **Connect**
@@ -103,12 +104,60 @@
   let segueIdentifier = "MasterToDetail"
   ```
 * Uncomment the `func prepare(for segue)` code
+* Run the app to test out your Segue functionality
+
+## Configuring the DetailViewController
+
+* In `Main.storyboard` add a **Text View** to the Detail View Controller scene
+  * From the **Object Library** drag and drop a **Text View** onto the scene and adjust it to fit properly
+* Connect the **Text View** as an IBOutlet to the `DetailViewController`
+  * Make sure you **Show the Assistant Editor** so you can see the Storyboard and DetailViewController class next to each other
+  * **PRO TIP:** You can hold `Option + Shift` then click on a file to give you presentation options
+  * Control click and drag the **Text View** onto `DetailViewController`
+  * Make sure **Outlet** is selected in the popup and give it the name: `textView`
+  * The final IBOutlet should look something like this:
+    ```swift
+    @IBOutlet weak var textView: UITextView!
+    ```
+* Add a `var` to `DetailViewController` which will be used to hold your String data aka the Note
+  * **NOTE:** Make the String `var` is an optional `?`
+  ```swift
+  var note: String?
+  ```
+* Write a function called `configureView()` to set `textView.text` equal to the value of the note that was passed in from the segue:
+  ```swift
+  func configureView() {
+    if let note = note {
+      textView.text = note
+    }
+  }
+  ```
+* Finally, make sure to call your new `configureView()` function from the `viewDidLoad()` lifecycle function
+
+## Passing Data From Master to Detail
+
+* In `MasterViewController` we need to update the `func prepare(for segue)` function to properly send data to the `DetailViewController` when we segue
+* Inside the `prepare(for segue)` function we need to do two things:
+  * Get the new view controller using `segue.destinationViewController`.
+  * Pass the selected note to the new view controller.
+* The `prepare(for segue)` function should look something like the following:
+  ```swift
+  if segue.identifier == segueIdentifier {
+    if let indexPath = tableView.indexPathForSelectedRow {
+      let note = notes[indexPath.row]
+      let detailViewController = segue.destination as! DetailViewController
+      detailViewController.note = note
+    }
+  }
+  ```
+* Build and run the app and verify that you are passing data correctly to the `DetailViewController`
 
 ## Bonus Functionality
 
 * Add Persistence
-  * Core Data
-  * Realm
-  * NSUserDefaults
-  * Firebase
+  * Here are some options:
+    * Core Data
+    * Realm
+    * NSUserDefaults
+    * Firebase
 * When you click on the + button to add a new note, automatically move to detail view controller
