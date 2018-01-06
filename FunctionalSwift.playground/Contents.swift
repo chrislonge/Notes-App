@@ -23,7 +23,7 @@ import UIKit
  }
  ````
 
- We will use the `sorted(by:)` function from Swift's standard library to show how functional programming is done with closures.
+ We will use the `sorted(by:)` function from Swift's standard library to show a small example of how functional programming is done with closures.
  
  The `sorted(by:)` function sorts an array of values based on the output of a sorting closure that you provide.
 */
