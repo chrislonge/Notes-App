@@ -8,15 +8,31 @@
 
 import UIKit
 
+protocol NoteUpdateDelegate: class {
+    func updateNote(_ note: Note, at index: Int)
+}
+
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
-    var note: String?
+    var note: Note?
+    var noteIndex: Int?
+    
+    weak var delegate: NoteUpdateDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        note?.content = textView.text
+        if let note = note, let index = noteIndex {
+            delegate?.updateNote(note, at: index)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,7 +42,7 @@ class DetailViewController: UIViewController {
 
     func configureView() {
         if let note = note {
-            textView.text = note
+            textView.text = note.content
         }
     }
 }

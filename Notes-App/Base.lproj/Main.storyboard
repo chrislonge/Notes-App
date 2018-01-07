@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotesCell" id="5mO-hs-SLm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="noteCell" id="5mO-hs-SLm">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5mO-hs-SLm" id="Hhq-Ci-hMB">
@@ -27,7 +27,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="jOq-uW-Maa" kind="show" identifier="MasterToDetail" id="eGB-dy-Ce5"/>
+                                    <segue destination="jOq-uW-Maa" kind="show" identifier="showNote" id="eGB-dy-Ce5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -39,7 +39,7 @@
                     <navigationItem key="navigationItem" id="faF-hR-Z2i">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="LaY-sd-oh7">
                             <connections>
-                                <action selector="addNote:" destination="KIa-t0-Ikg" id="Cpv-Zz-aJm"/>
+                                <segue destination="jOq-uW-Maa" kind="show" identifier="showNewNote" id="nSS-vy-Fwd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -95,4 +95,7 @@
             <point key="canvasLocation" x="-839" y="-234"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nSS-vy-Fwd"/>
+    </inferredMetricsTieBreakers>
 </document>

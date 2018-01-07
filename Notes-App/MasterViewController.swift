@@ -10,10 +10,11 @@ import UIKit
 
 class MasterViewController: UITableViewController {
     
-    let cellIdentifier = "NotesCell"
-    let segueIdentifier = "MasterToDetail"
+    let cellIdentifier = "noteCell"
+    let showNoteSegue = "showNote"
+    let addNewNoteSegue = "showNewNote"
     
-    var notes = [String]()
+    var notes = [Note]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,19 +25,13 @@ class MasterViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = self.editButtonItem
         
-        notes.append("Hello")
-        notes.append("World!")
+        notes.append(Note(content: "Hello"))
+        notes.append(Note(content: "World!"))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func addNote(_ sender: Any) {
-        notes.insert("New note", at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
     }
 
     // MARK: - Table view data source
@@ -55,7 +50,7 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = notes[indexPath.row]
+        cell.textLabel?.text = notes[indexPath.row].content
 
         return cell
     }
@@ -83,13 +78,29 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == segueIdentifier {
+        if segue.identifier == showNoteSegue {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let note = notes[indexPath.row]
                 let detailViewController = segue.destination as! DetailViewController
+                detailViewController.delegate = self
                 detailViewController.note = note
+                detailViewController.noteIndex = indexPath.row
             }
+        } else if segue.identifier == addNewNoteSegue {
+            notes.insert(Note(content: "New note"), at: 0)
+            let indexPath = IndexPath(row: 0, section: 0)
+            tableView.insertRows(at: [indexPath], with: .automatic)
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.delegate = self
+            detailViewController.note = notes[0]
+            detailViewController.noteIndex = 0
         }
     }
+}
 
+extension MasterViewController: NoteUpdateDelegate {
+    func updateNote(_ note: Note, at index: Int) {
+        notes[index] = note
+        tableView.reloadData()
+    }
 }
