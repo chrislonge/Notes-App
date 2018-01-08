@@ -12,7 +12,7 @@ class MasterViewController: UITableViewController {
     
     let cellIdentifier = "noteCell"
     let showNoteSegue = "showNote"
-    let addNewNoteSegue = "showNewNote"
+    let showNewNoteSegue = "showNewNote"
     
     var notes = [Note]()
 
@@ -86,9 +86,11 @@ class MasterViewController: UITableViewController {
                 detailViewController.note = note
                 detailViewController.noteIndex = indexPath.row
             }
-        } else if segue.identifier == addNewNoteSegue {
+        } else if segue.identifier == showNewNoteSegue {
+            // Insert a new Note to the model before transitioning to DetailViewController
             notes.insert(Note(content: "New note"), at: 0)
             let indexPath = IndexPath(row: 0, section: 0)
+            // Insert a new row in our tableView
             tableView.insertRows(at: [indexPath], with: .automatic)
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.delegate = self
