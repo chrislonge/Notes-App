@@ -1,7 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-
 //func ascendingEvenElements(of array: [Int]) -> [Int] {
 //    var evenArray: [Int] = []
 //    for integer in array {
@@ -17,5 +13,3 @@ func ascendingEvenElements(of array: [Int]) -> [Int] {
 }
 
 print(ascendingEvenElements(of: [3,6,4,2,7,9]))
-
-//: [Next](@next)
