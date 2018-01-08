@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios'>
+    <pages>
+        <page name='Type Safety'/>
+        <page name='Constants and Variables'/>
+        <page name='Control Flow - For'/>
+        <page name='Control Flow - If &amp; Switch'/>
+        <page name='Functions'/>
+        <page name='Functions 2'/>
+        <page name='Functions 2 - Solutions'/>
+        <page name='Optionals'/>
+        <page name='Classes'/>
+    </pages>
+</playground>
