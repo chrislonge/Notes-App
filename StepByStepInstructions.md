@@ -190,9 +190,11 @@ When a user presses the + button we want the app to create a new Note and then n
 
 ## Deleting Notes From The Model
 
-* Find the `tableView(canEditRowAt IndexPath)` data source function and uncomment it
-* Find the `tableView(commit edityingStyle, forRowAt indexPath)` data source function and uncomment it
-* Edit the `tableView(commit edityingStyle, forRowAt indexPath)` function to properly delete a Note from your model whenever it is called:
+To delete notes from the model we will take advantage of some of the boilerplate code the comes with `UITableViewController`.
+
+* In `MasterViewController.swift` find the `tableView(canEditRowAt IndexPath)` data source function and uncomment it.
+* Find the `tableView(commit edityingStyle, forRowAt indexPath)` data source function and uncomment it this one as well.
+* Edit the `tableView(commit edityingStyle, forRowAt indexPath)` function to properly delete a `Note` from your model whenever it is called:
   ```swift
   if editingStyle == .delete {
     // Delete the row from the data source
@@ -200,6 +202,97 @@ When a user presses the + button we want the app to create a new Note and then n
     tableView.deleteRows(at: [indexPath], with: .fade)
   }
   ```
+
+## Passing Data Back to Master Using a Delegate
+
+We want to be able to edit notes in `DetailViewController` and have the model in `MasterViewController` get updated. To accomplish this we will use a **protocol** that we define and a **delegate**. We need to make `MasterViewController` a delegate of `DetailViewController`. This allows our DetailVC to send a message back to the MasterVC, thus enabling us to send data back.
+
+For `MasterViewController` to be a delegate of `DetailViewController` it must conform to `DetailViewController`'s protocol which we have to define. This tells `MasterViewController` which methods it must implement.
+
+* First we must define our **protocol** for sending `Note`'s back. Add this to the top of the `DetailViewController.swift` file:
+  ```swift
+  protocol NoteUpdateDelegate: class {
+    func updateNote(_ note: Note, at index: Int)
+  }
+  ```
+  * The `updateNote` funciton is what we'll use to pass a `note` and `index` back to Master.
+  * **NOTE:** The protocol and function goes outside of the `DetailViewController` class
+* Declare a **weak optional** `delegate` inside the `DetailViewController` class of type `NoteUpdateDelegate`:
+  ```swift
+  weak var delegate: NoteUpdateDelegate?
+  ```
+  * We define the `var` as `weak` to avoid creating a **strong reference cycle**.
+  * Please see the [GUIDE TO REFERENCES IN SWIFT](https://krakendev.io/blog/weak-and-unowned-references-in-swift) for more details on weak and strong references.
+
+When a user hits the Back button, we need to update the current `Note` and then pass it back to Master. We will use the `viewWillDisappear()` lifecycle method to do this.
+
+* Add the `viewWillDisappear()` method and then inside of the function update the current `Note`. Then use the delegate to pass the note back to Master:
+  ```swift
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+
+    // Update the current note
+    note?.content = textView.text
+    // Unwrap both optionals, then use the delegate to call function
+    if let note = note, let index = noteIndex {
+      delegate?.updateNote(note, at: index)
+    }
+  }
+  ```
+* Go back to `MasterViewController.swift` and make the class adopt the `NoteUpdateDelegate` protocol. We will use an **extension** to make things a little cleaner:
+  ```swift
+  extension MasterViewController: NoteUpdateDelegate {
+  }
+  ```
+
+Since `MasterViewController` has now adopted the protocol, the class needs to implement the function we defined in the protocol.
+
+* Implement the `updateNote(_ note: Note, at index: Int)` function. Use it to update the `notes` model and also update our table view:
+  ```swift
+  extension MasterViewController: NoteUpdateDelegate {
+    func updateNote(_ note: Note, at index: Int) {
+      notes[index] = note
+      tableView.reloadData()
+    }
+  }
+  ```
+
+The final step is to assign `DetailViewController`'s delegate to be `MasterViewController`. We can assign the delegate inside the `prepare(for segue)` function since we attain a reference to `DetailViewController` before segue'ing.
+
+* Update the `prepare(for segue)` function to properly assign `DetailViewController`'s delegate:
+  ```swift
+  detailViewController.delegate = self
+  ```
+* The final `prepare(for segue)` function should look something like this:
+  ```swift
+  if segue.identifier == showNoteSegue {
+    if let indexPath = tableView.indexPathForSelectedRow {
+      let note = notes[indexPath.row]
+      let detailViewController = segue.destination as! DetailViewController
+      detailViewController.delegate = self
+      detailViewController.note = note
+      detailViewController.noteIndex = indexPath.row
+    }
+  } else if segue.identifier == showNewNoteSegue {
+    // Insert a new Note to the model before transitioning to DetailViewController
+    notes.insert(Note(content: "New note"), at: 0)
+    let indexPath = IndexPath(row: 0, section: 0)
+    // Insert a new row in our tableView
+    tableView.insertRows(at: [indexPath], with: .automatic)
+    let detailViewController = segue.destination as! DetailViewController
+    detailViewController.delegate = self
+    detailViewController.note = notes[0]
+    detailViewController.noteIndex = 0
+  }
+  ```
+* Build and run your app to see if you successfully pass data back from Detail to Master.
+
+### References
+
+* [Using Delegation to Communicate With Other View Controllers](http://developer.apple.com/library/ios/featuredarticles/ViewControllerPGforiPhoneOS/ManagingDataFlowBetweenViewControllers/ManagingDataFlowBetweenViewControllers.html#//apple_ref/doc/uid/TP40007457-CH8-SW9) in the View Controller Programming Guide
+* [Delegate Pattern](https://developer.apple.com/library/mac/#documentation/General/Conceptual/DevPedia-CocoaCore/Delegation.html)
+* YouTube tutorial: [iOS Swift Basics Tutorial: Protocols and Delegates](https://www.youtube.com/watch?v=9LHDsSWc680)
+* ["WEAK, STRONG, UNOWNED, OH MY!" - A GUIDE TO REFERENCES IN SWIFT](https://krakendev.io/blog/weak-and-unowned-references-in-swift)
 
 ## Bonus Functionality
 
