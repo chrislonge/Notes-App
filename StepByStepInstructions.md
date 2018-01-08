@@ -186,7 +186,6 @@ When a user presses the + button we want the app to create a new Note and then n
     detailViewController.noteIndex = 0
   }
   ```
-
 * Build and run your app to test the + (add note) functionality
 
 ## Deleting Notes From The Model
