@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     var note: Note?
     var noteIndex: Int?
     
-    weak var delegate: NoteUpdateDelegate? = nil
+    weak var delegate: NoteUpdateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,9 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // Update the current note
         note?.content = textView.text
+        // Unwrap both optionals, then use the delegate to call function
         if let note = note, let index = noteIndex {
             delegate?.updateNote(note, at: index)
         }
