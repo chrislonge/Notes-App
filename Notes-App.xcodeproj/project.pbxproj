@@ -27,7 +27,7 @@
 		C5EFD6FD2000020B00366BC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5EFD7002000020B00366BC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5EFD7022000020B00366BC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C5EFD7082000062700366BC5 /* FunctionalSwift.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = FunctionalSwift.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C5EFD7082000062700366BC5 /* introToSwift.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = introToSwift.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C5EFD7092000471900366BC5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -47,7 +47,7 @@
 			children = (
 				C5EFD7092000471900366BC5 /* README.md */,
 				C5CCD51D2001706500700BE6 /* StepByStepInstructions.md */,
-				C5EFD7082000062700366BC5 /* FunctionalSwift.playground */,
+				C5EFD7082000062700366BC5 /* introToSwift.playground */,
 				C5EFD6F52000020B00366BC5 /* Notes-App */,
 				C5EFD6F42000020B00366BC5 /* Products */,
 			);
