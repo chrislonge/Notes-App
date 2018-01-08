@@ -1,7 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-
 let temperatureInFahrenheit = 40
 if temperatureInFahrenheit <= 32 {
     print("It's very cold. Consider wearing a scarf.")
@@ -10,5 +6,3 @@ if temperatureInFahrenheit <= 32 {
 }
 
 // Yay, no parenthesis!
-
-//: [Next](@next)

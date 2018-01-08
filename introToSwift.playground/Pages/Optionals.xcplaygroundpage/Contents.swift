@@ -1,8 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-import UIKit
-
 // In Java world...
 
 var str: String = "a String"
@@ -29,5 +24,3 @@ if let str = strOrNil {
 } else {
     print("It's nil")
 }
-
-//: [Next](@next)

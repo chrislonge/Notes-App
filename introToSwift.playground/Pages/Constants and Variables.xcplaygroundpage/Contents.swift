@@ -1,7 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-
 // Variable, mutable
 var isCool = true
 isCool = false
@@ -13,5 +9,3 @@ let isConstantlyCool = true
 print(isConstantlyCool)
 
 // Default should be immutable
-
-//: [Next](@next)

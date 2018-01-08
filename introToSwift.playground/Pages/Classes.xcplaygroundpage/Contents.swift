@@ -1,5 +1,7 @@
 //: [Previous](@previous)
 
+// Import Foundation to use Date.
+// Swift offers Int/UInt, Float, Double, Bool, String, Character, Optional, and Tuples.
 import Foundation
 
 // Create model with optional

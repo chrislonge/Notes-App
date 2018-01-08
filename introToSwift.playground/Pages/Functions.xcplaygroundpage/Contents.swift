@@ -1,7 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-
 func greet(person: String) -> String {
     let greeting = "Hello, " + person + "!"
     return greeting
@@ -10,5 +6,3 @@ func greet(person: String) -> String {
 //Notice the argument labels!
 
 print(greet(person: "Anna"))
-
-//: [Next](@next)

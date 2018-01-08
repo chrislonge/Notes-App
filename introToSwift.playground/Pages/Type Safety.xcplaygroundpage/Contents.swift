@@ -1,7 +1,3 @@
-//: Playground - noun: a place where people can play
-
-import UIKit
-
 // Follow along with the below examples:
 
 // Swift is a type-safe language
