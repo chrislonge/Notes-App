@@ -6,7 +6,7 @@ Please see [StepByStepInstructions.md](StepByStepInstructions.md) for instructio
 
 ## Bonus Functionality
 
-If you're feeling up to it. Here is some additionaly functionality to practice implementing.
+If you're feeling up to it, here is some additionaly functionality work on.
 
 * Add Persistence
   * Here are some options:
