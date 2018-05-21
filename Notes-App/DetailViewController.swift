@@ -16,9 +16,6 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     var note: Note?
-    var noteIndex: Int?
-    
-    weak var delegate: NoteUpdateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,22 +23,19 @@ class DetailViewController: UIViewController {
         configureView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Update the current note
-        note?.content = textView.text
-        // Unwrap both optionals, then use the delegate to call function
-        if let note = note, let index = noteIndex {
-            delegate?.updateNote(note, at: index)
-        }
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let note = note {
+            note.content = textView.text
+        }
+    }
+    
     func configureView() {
         if let note = note {
             textView.text = note.content

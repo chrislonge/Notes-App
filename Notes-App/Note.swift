@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Note {
+class Note {
     var content: String?
     let dateCreated = Date()
+    
+    init(withContent content: String) {
+        self.content = content
+    }
 }
