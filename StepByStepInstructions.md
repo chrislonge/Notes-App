@@ -3,20 +3,22 @@
 ## Initial Project and Storyboard Setup
 
 * New Project -> Single View App -> Choose Swift
-* Start by renaming the `ViewController.swift` file to `DetailViewController`
-  * Click on the original `ViewController.swift` file, highlight `ViewController` in the source code, right click -> Refactor -> Rename
-* In `Main.storyboard` click on the View Controller scene, then in **Identity Inspector** set `DetailViewController` as the class
+* When you create a new project, Xcode provides a default `ViewController.swift` file. Start by renaming `ViewController.swift` to `DetailViewController.swift`
+  * Click on the original `ViewController.swift` file, highlight `ViewController` in the source code, then right click -> Refactor -> Rename
+* In `Main.storyboard` click on the View Controller scene, then in **Identity Inspector (⌥⌘3)** set `DetailViewController` as the class
   * **NOTE:** In Xcode 9.3.x and higher, this step is done automatically 😃
-* Find `Table View Controller` in the Object Library and drag it into `Main.storyboard`
+* Find `Table View Controller` inside the **Object Library (⌃⌥⌘3)** and drag it onto `Main.storyboard`
 * Click the newly created `Table View Controller` then in the Xcode dropdown menu's go to Editor -> Embed In -> Navigation Controller
-* Click on the new `Navigation Controller` and in the **Attribute Inspector** check the "Is Initial View Controller" option
+  > Navigation Controllers enable users to move between different screens and to display information or react to events
+* Click on the new `Navigation Controller` and in the **Attributes Inspector (⌥⌘4)** check the "Is Initial View Controller" option
 * Go to **Project Navigator** (⌘1) and add a new file to the project
   * Use the **Cocoa Touch Class** option then hit next
   * Update "Subclass of" to `UITableViewController`
   * Update "Class" to `MasterViewController`
   * Click Next and then Create
-* Go back to `Main.storyboard` and click on your  `Table View Controller` scene
-* Once selected, go to the **Identity Inspector** and under Class make sure you select your newly created `MasterViewController`
+* Go back to `Main.storyboard` and click/select your  `Table View Controller` scene
+* Once selected, go to the **Identity Inspector (⌥⌘3)** and under Class make sure you select your newly created `MasterViewController`
+  * **NOTE:** If you can't see your newly created class in the dropdown menu, then you probably havn't selected the Table View Controller correctly. Use the **Document Outline** view to properly select it.
 
 ## Configuring MasterViewController
 
@@ -24,11 +26,11 @@
 
 When you subclass `UITableViewController` it brings in a lot of pre-wired functionality. The `UITableViewController` subclass creates a `UITableView` and also sets itself as the delegate and data source of the table view. If you were to create a `UIViewController` that has a table view and does not inherit from `UITableViewController` you would have to set up the data source and the delegate of your table view yourself.
 
-`UITableView` declares two protocols `UITableViewDataSource` and `UITableViewDelegate`. The data source protocol is used by the table view to determine the content it needs to display, and the delegate protocol is used to inform another class about cells that have been selected and to provide an interface for modifying the table view behavior.
+`UITableView` declares two protocols `UITableViewDataSource` and `UITableViewDelegate`. The data source protocol is used by the table view to determine the content it needs to display, and the delegate protocol is used to inform the class about cells that have been selected and to provide an interface for modifying the table view behavior.
 
-In other words, `UITableViewController` comes with boilerplate code ready for you to use and also comes pre-wired to use the `UITableViewDataSource` and `UITableViewDelegate` protocols.
+In other words, `UITableViewController` comes with boilerplate code ready for you to use and also comes pre-wired to implement the `UITableViewDataSource` and `UITableViewDelegate` protocols.
 
-#### Creating the Model
+### Creating the Model
 
 * Create a new swift file which we will use to declare our `Note` model
   * File -> New -> File -> Swift File
@@ -44,14 +46,15 @@ In other words, `UITableViewController` comes with boilerplate code ready for yo
       }
     }
     ```
-* Create our `notes` model inside of `MasterViewController` by creating an array of `Note`'s
-* Add the following code just below `class MasterViewController: UITableViewController`:
+    > Notice the `init()` function has both an *argument label* (`withContent`) and a *parameter name* (`content`). The argument label is used when calling the function; each argument is written in the function call with its argument label before it. The parameter name is used in the implementation of the function.
 
-  ```swift
-  var notes = [Note]()
-  ```
+* Now lets create our `notes` model inside of `MasterViewController` by creating an array of `Note`'s
+  * Add the following code just below `class MasterViewController: UITableViewController`:
+    ```swift
+    var notes = [Note]()
+    ```
 
-#### Implement the `UITableView` protocols
+### Implement the `UITableView` protocols
 
 * Find the `numberOfSections()` table view data source function and change the return value to: `1`
 
@@ -68,20 +71,24 @@ In other words, `UITableViewController` comes with boilerplate code ready for yo
 
   * Note that `tableView(numberOfRowsInSection)` is a **Required** function
 * Uncomment the `tableView(cellForRowAt indexPath)` function
-* In `Main.storyboard` find the Table View Cell in the Master View Controller scene, then inside the **Attributes Inspector** give the table cell the reuse identifier: `noteCell`
-  * **PRO TIP:** Use the **Document Outline** sidebar section to easily highlight different UI components
+* In `Main.storyboard` find the "Table View Cell" in the Master View Controller scene, then inside the **Attributes Inspector (⌥⌘4)** give the table cell the reuse identifier: `noteCell`
+
+  > **PRO TIP:** Use the **Document Outline** sidebar section to easily highlight different UI components
+
+  ![Table View Cell](/Assets/MarkdownAssets/TableViewCell.png) ![Table View Cell Identifier](/Assets/MarkdownAssets/TableViewCellIdentifier.png)
+
 * Back in `MasterViewController.swift` create a `String` constant for the identifier and use it with the `dequeuResuableCell()` function inside of the `tableView(cellForRowAt indexPath)` function
-* Under the `notes` array add the following:
+  * Under the `notes` array add the following:
 
-  ```swift
-  let cellIdentifier = "noteCell"
-  ```
+    ```swift
+    let noteCellIdentifier = "noteCell"
+    ```
 
-* In the `cellForRowAt` function:
+  * In the `cellForRowAt` function:
 
-  ```swift
-  let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-  ```
+    ```swift
+    let cell = tableView.dequeueReusableCell(withIdentifier: noteCellIdentifier, for: indexPath)
+    ```
 
 * Under "Configure the cell" comment in the `tableView(cellForRowAt indexPath)` function, set the `textLabel` of each table view cell equal to the `content` of your `notes` model using the appropriate index
   * You can use `indexPath.row` to give you the row or index the cell is on
@@ -90,7 +97,7 @@ In other words, `UITableViewController` comes with boilerplate code ready for yo
   cell.textLabel?.text = notes[indexPath.row].content
   ```
 
-* In the `viewDidLoad()` function add a few `Note`s to the `notes` array to test out your table view:
+* In the `viewDidLoad()` lifecycle function add a few `Note`s to the `notes` array to test out your table view:
 
   ```swift
   notes.append(Note(withContent: "Hello"))
@@ -122,13 +129,13 @@ Segue's also provide a way to pass data from one controller to the next. In our 
 ## Configuring the DetailViewController
 
 * In `Main.storyboard` add a **Text View** to the Detail View Controller scene
-  * From the **Object Library** drag and drop a **Text View** onto the scene and adjust it to fit properly, aligning with the margins
+  * From the **Object Library (⌃⌥⌘3)** drag and drop a **Text View** onto the scene and adjust it to fit properly. Align it to fit within the margins
 * Connect the **Text View** as an `IBOutlet` to the `DetailViewController`
   * Make sure you **Show the Assistant Editor** so you can see the Storyboard and `DetailViewController.swift` class side by side
     > **PRO TIP:** You can hold `Option + Shift` then click on a file to give you different presentation options
-  * Create the outlet by control clicking and dragging from the **Text View** onto `DetailViewController`
+  * Create the outlet by control clicking and dragging from the **Text View** onto `DetailViewController.swift`
   * Make sure **Outlet** is selected in the popup and give it the name: `textView`
-  * The final `IBOutlet` should look something like this:
+  * Once you're done the `IBOutlet` inside `DetailViewController.swift` should look something like this:
     ```swift
     @IBOutlet weak var textView: UITextView!
     ```
@@ -166,7 +173,6 @@ Segue's also provide a way to pass data from one controller to the next. In our 
       let note = notes[indexPath.row]
       let detailViewController = segue.destination as! DetailViewController
       detailViewController.note = note
-      detailViewController.noteIndex = indexPath.row
     }
   }
   ```
@@ -175,20 +181,21 @@ Segue's also provide a way to pass data from one controller to the next. In our 
 
 ## Adding Notes To The Model
 
-* In `Main.storyboard` go to the **Object Library** and find a **Bar Button Item**
-* Drag a Button Item onto the right side of the navigation bar of the Table View Controller scene
-* In the **Attribute Inspector** make the "System Item" equal to "Add"
 * In `MasterViewController.swift` find the `viewDidLoad()` method and uncomment the `navigationItem` line of code
 * Change the code to use the leftBarButtonItem instead: `self.navigationItem.leftBarButtonItem = self.editButtonItem`
-* Build and run the app. We should now have a "Edit" button on the left side of the navigation bar, and a + plus button on the right side
+* Build and run the app. We should now have a "Edit" button on the left side of the navigation bar
+* In `Main.storyboard` go to the **Object Library (⌃⌥⌘3)** and find a **Bar Button Item**
+* Drag a Bar Button Item onto the right side of the navigation bar of the Master View Controller scene
+* In the **Attributes Inspector (⌥⌘4)** make the "System Item" equal to "Add"
+  ![Table View Cell](/Assets/MarkdownAssets/BarButtonItem.png)
 
-When a user presses the + button we want the app to create a new Note and then navigate to the detail page for editing. To accomplish this we'll need to create a new segue.
+> When a user presses the + button we want the app to create a new Note and then navigate to the detail page for editing. To accomplish this we'll need to create a new segue.
 
-* Create a new segue from the + button to the DetailViewController scene
+* Create a new segue from the + bar button item to the `DetailViewController` scene
   > **PRO TIP:** Use the **Document Outline** sidebar section to easily highlight different UI components
   * Control Drag from the `+` button to the `DetailViewController` scene
   * Select `Show` in the popup to create a segue of type `Show`
-  * Click on the new segue in the storyboard then on **Attributes Inspector**. Give it the Identifier name: `showNewNote`
+  * Click on the new segue in the storyboard then on **Attributes Inspector (⌥⌘4)**. Give it the Identifier name: `showNewNote`
 * In `MasterViewController.swift` create a `String` constant to match the Identifier
   * You should not have the following constants declared:
     ```swift
@@ -201,20 +208,18 @@ When a user presses the + button we want the app to create a new Note and then n
   ```swift
   if segue.identifier == showNoteSegue {
     if let indexPath = tableView.indexPathForSelectedRow {
-      let note = notes[indexPath.row]
-      let detailViewController = segue.destination as! DetailViewController
-      detailViewController.note = note
-      detailViewController.noteIndex = indexPath.row
+        let note = notes[indexPath.row]
+        let detailViewController = segue.destination as! DetailViewController
+        detailViewController.note = note
     }
-  } else if segue.identifier == addNewNoteSegue {
-    // Insert a new Note to the model before transitioning to DetailViewController
-    notes.insert(Note(content: "New note"), at: 0)
-    let indexPath = IndexPath(row: 0, section: 0)
-    // Insert a new row in our tableView
-    tableView.insertRows(at: [indexPath], with: .automatic)
-    let detailViewController = segue.destination as! DetailViewController
-    detailViewController.note = notes[0]
-    detailViewController.noteIndex = 0
+  } else if segue.identifier == showNewNoteSegue {
+      // Insert a new Note to the model before transitioning to DetailViewController
+      notes.insert(Note(withContent: "New note"), at: 0)
+      let indexPath = IndexPath(row: 0, section: 0)
+      // Insert a new row in our tableView
+      tableView.insertRows(at: [indexPath], with: .automatic)
+      let detailViewController = segue.destination as! DetailViewController
+      detailViewController.note = notes[0]
   }
   ```
 
@@ -280,14 +285,3 @@ override func viewWillAppear(_ animated: Bool) {
 * [Delegate Pattern](https://developer.apple.com/library/mac/#documentation/General/Conceptual/DevPedia-CocoaCore/Delegation.html)
 * YouTube tutorial: [iOS Swift Basics Tutorial: Protocols and Delegates](https://www.youtube.com/watch?v=9LHDsSWc680)
 * ["WEAK, STRONG, UNOWNED, OH MY!" - A GUIDE TO REFERENCES IN SWIFT](https://krakendev.io/blog/weak-and-unowned-references-in-swift)
-
-## Bonus Functionality
-
-* Add Persistence
-  * Here are some options:
-    * Core Data
-    * Realm
-    * NSUserDefaults
-    * Firebase
-* Add UI Constraints
-  * Make it so the app looks good on any iPhone size!
